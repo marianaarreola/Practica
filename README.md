@@ -1,26 +1,22 @@
-\# 🎓 Sistema Universitario - Caso Integrador (Prácticas 7, 8 y 9)
+\# 🎓 Sistema de Control Escolar Universitario - Caso Integrador
 
 
 
-\## 📝 Información General
+\## 👥 Integrantes
 
-\* \*\*Institución:\*\* Instituto Politécnico Nacional (IPN)
+\* \*Flores Carlos Hunab Ku\*
 
-\* \*\*Programa:\*\* Ingeniería en Sistemas Computacionales (ISC)
+\* \*Jose Sandoval Kevin Jael\*
 
-\* \*\*Desarrollador:\*\* Mariana Arreola
+\* \*Mariana Martinez Arreola\* 
 
-\* \*\*Asignatura:\*\* Bases de Datos
-
-
-
-\---
+\* \*Monica Abril Vallejo Santiago\*
 
 
 
-\## 🏛️ Descripción del Dominio
+\## 📝 Descripción del Dominio
 
-El presente proyecto implementa el núcleo de un \*\*Sistema Universitario\*\* diseñado para gestionar el control escolar, la asignación docente y los estímulos económicos de la comunidad estudiantil. El esquema modela la interacción entre estudiantes, los profesores adscritos a departamentos académicos, la oferta de cursos, los horarios de clases vinculados a aulas físicas, el registro transaccional de inscripciones académicas con sus respectivas evaluaciones, y el seguimiento de becas institucionales.
+Este proyecto implementa un sistema relacional completo para la gestión y control escolar de una institución de educación superior. El diseño contempla el seguimiento integral de la estructura académica, administrando la jerarquía de departamentos, la asignación del cuerpo docente, el catálogo de cursos con sus respectivas unidades de crédito, la distribución física en aulas, la planeación de clases estructuradas, el historial de inscripciones y calificaciones de los alumnos, así como el control de estímulos económicos mediante un sistema acotado de becas institucionales.
 
 
 
@@ -28,85 +24,29 @@ El presente proyecto implementa el núcleo de un \*\*Sistema Universitario\*\* d
 
 
 
-\## 🗺️ Diseño del Esquema Relacional
+\## 🗺️ Modelo Relacional del Esquema
 
 
 
-El sistema está compuesto por \*\*8 relaciones interconectadas\*\* con llaves primarias ($PK$) y llaves foráneas ($FK$):
+El sistema se compone de las siguientes 8 relaciones interconectadas de manera sólida:
 
 
 
-1\. \*\*Departamento\*\* ($\\underline{id\\\_depto}$, nombre, edificio, presupuesto)
+1\. \*DEPARTAMENTOS\* ($\\underline{\\text{id\\\_depto}}$, nombre, edificio, presupuesto)
 
-2\. \*\*Profesor\*\* ($\\underline{id\\\_profesor}$, nombre, especialidad, \*id\\\_depto\*, telefono) $\\rightarrow$ \*FK: id\_depto\*
+2\. \*PROFESORES\* ($\\underline{\\text{id\\\_profesor}}$, nombre, especialidad, id\_depto, telefono)
 
-3\. \*\*Estudiante\*\* ($\\underline{id\\\_estudiante}$, nombre, carrera, \*id\\\_depto\*, fecha\\\_ingreso) $\\rightarrow$ \*FK: id\_depto\*
+3\. \*CURSOS\* ($\\underline{\\text{id\\\_curso}}$, nombre, creditos, horas\_totales, id\_depto)
 
-4\. \*\*Curso\*\* ($\\underline{id\\\_curso}$, nombre, creditos, \*id\\\_depto\*, horas\\\_totales) $\\rightarrow$ \*FK: id\_depto\*
+4\. \*ESTUDIANTES\* ($\\underline{\\text{id\\\_estudiante}}$, nombre, carrera, edad, id\_depto)
 
-5\. \*\*Aula\*\* ($\\underline{id\\\_aula}$, codigo, capacidad, tipo)
+5\. \*AULAS\* ($\\underline{\\text{id\\\_aula}}$, codigo, capacidad, tipo, edificio)
 
-6\. \*\*Horario\*\* ($\\underline{id\\\_horario}$, \*id\\\_curso\*, \*id\\\_profesor\*, \*id\\\_aula\*, dia, hora\\\_inicio) $\\rightarrow$ \*FKs: id\_curso, id\_profesor, id\_aula\*
+6\. \*CLASES\* ($\\underline{\\text{id\\\_clase}}$, id\_curso, id\_profesor, id\_aula, horario)
 
-7\. \*\*Inscripcion\*\* ($\\underline{id\\\_estudiante, id\\\_curso, semestre}$, calificacion) $\\rightarrow$ \*FKs: id\_estudiante, id\_curso\*
+7\. \*INSCRIPCIONES\* ($\\underline{\\text{id\\\_inscripcion}}$, id\_estudiante, id\_clase, calificacion)
 
-8\. \*\*Beca\*\* ($\\underline{id\\\_beca}$, \*id\\\_estudiante\*, tipo\\\_beca, porcentaje, estado) $\\rightarrow$ \*FK: id\_estudiante\*
-
-
-
-\---
-
-
-
-\## 🧮 Modelado Teórico y Equivalencia de Lenguajes
-
-A continuación se demuestran formalmente los comportamientos matemáticos para las consultas clave del Caso Integrador.
-
-
-
-\### Consulta 1: Selección y Proyección Básica (Bloque 1)
-
-\* \*\*Descripción:\*\* Obtener el nombre y la carrera de los alumnos adscritos al departamento 1.
-
-\* \*\*Álgebra Relacional (AR):\*\*
-
-&#x20; $$\\pi\_{nombre, carrera}(\\sigma\_{id\\\_depto = 1}(Estudiante))$$
-
-\* \*\*Cálculo Relacional de Tuplas (CRT):\*\*
-
-&#x20; $$\\{ t \\,|\\, \\exists e \\in Estudiante \\, (e.id\\\_depto = 1 \\wedge t.nombre = e.nombre \\wedge t.carrera = e.carrera) \\}$$
-
-\* \*\*Cálculo Relacional de Dominios (CRD):\*\*
-
-&#x20; $$\\{ \\langle nom, car \\rangle \\,|\\, \\exists id\\\_e, id\\\_d, f \\, (\\langle id\\\_e, nom, car, id\\\_d, f \\rangle \\in Estudiante \\wedge id\\\_d = 1) \\}$$
-
-
-
-\### Consulta 6: Reunión Natural / Inner Join (Bloque 2)
-
-\* \*\*Descripción:\*\* Listar el nombre del estudiante, el nombre del curso y la calificación final de todas las inscripciones.
-
-\* \*\*Álgebra Relacional (AR):\*\*
-
-&#x20; $$\\pi\_{Estudiante.nombre, Curso.nombre, Inscripcion.calificacion}(Estudiante \\bowtie Inscripcion \\bowtie Curso)$$
-
-\* \*\*Cálculo Relacional de Tuplas (CRT):\*\*
-
-&#x20; $$\\{ t \\,|\\, \\exists e \\in Estudiante \\, \\exists i \\in Inscripcion \\, \\exists c \\in Curso \\, (e.id\\\_estudiante = i.id\\\_estudiante \\wedge i.id\\\_curso = c.id\\\_curso \\wedge t.nombre = e.nombre \\wedge t.curso = c.nombre \\wedge t.calificacion = i.calificacion) \\}$$
-
-
-
-\### Consulta 16: División Relacional Estricta (Bloque 4)
-
-\* \*\*Descripción:\*\* Encontrar los nombres de los estudiantes inscritos en TODOS los cursos correspondientes al departamento 1.
-
-\* \*\*Álgebra Relacional (AR):\*\*
-
-&#x20; $$\\pi\_{id\\\_estudiante, id\\\_curso}(Inscripcion) \\div \\pi\_{id\\\_curso}(\\sigma\_{id\\\_depto = 1}(Curso))$$
-
-\* \*\*Cálculo Relacional de Tuplas (CRT):\*\*
-
-&#x20; $$\\{ t \\,|\\, \\exists e \\in Estudiante \\, (t.nombre = e.nombre \\wedge \\forall c \\in Curso \\, (c.id\\\_depto = 1 \\Rightarrow \\exists i \\in Inscripcion \\, (i.id\\\_estudiante = e.id\\\_estudiante \\wedge i.id\\\_curso = c.id\\\_curso))) \\}$$
+8\. \*BECAS\* ($\\underline{\\text{id\\\_beca}}$, id\_estudiante, porcentaje, tipo\_beca)
 
 
 
@@ -114,25 +54,27 @@ A continuación se demuestran formalmente los comportamientos matemáticos para 
 
 
 
-\## 🚀 Instrucciones de Instalación y Ejecución
+\## ⚙️ Instrucciones de Instalación y Ejecución
 
 
 
 \### Requisitos Previos
 
-\* MySQL Server (Versión 8.0 o superior) o MySQL Workbench.
+\* PostgreSQL 13 o superior instalado localmente.
 
-\* Cliente Git instalado localmente.
+\* pgAdmin 4 o cliente de terminal psql.
+
+\* Git configurado en el sistema operativo.
 
 
 
-\### Pasos para Despliegue
+\### Pasos para Ejecución Local
 
-1\. \*\*Clonar el repositorio:\*\*
+1\. Abre tu herramienta de bases de datos preferida conectada a PostgreSQL.
 
-&#x20;  ```bash
+2\. Crea la base de datos ejecutando el comando:
 
-&#x20;  git clone \[https://github.com/marianaarreola/Practica.git](https://github.com/marianaarreola/Practica.git)
+&#x20;  ```sql
 
-&#x20;  cd Practica
+&#x20;  CREATE DATABASE control\_escolar;
 
