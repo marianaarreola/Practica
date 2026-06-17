@@ -1,5 +1,4 @@
-Aquí tienes el código completo y listo para copiar y pegar en tu archivo src/esquema.sql. Incluye la creación de las 8 tablas estructuradas con sus llaves primarias y foráneas, y las 108 tuplas reales para cumplir con el requisito de la práctica.
-```sql
+
 -- =============================================================================
 -- SCRIPT DE CREACIÓN DE BASE DE DATOS Y CARGA MASIVA DE DATOS (100+ TUPLAS)
 -- =============================================================================
