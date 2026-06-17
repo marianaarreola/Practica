@@ -8,7 +8,7 @@
 
 \* \*Jose Sandoval Kevin Jael\*
 
-\* \*Mariana Martinez Arreola\* 
+\* \*Mariana Martinez Arreola\*
 
 \* \*Monica Abril Vallejo Santiago\*
 
@@ -50,31 +50,5 @@ El sistema se compone de las siguientes 8 relaciones interconectadas de manera s
 
 
 
-\---
 
-
-
-\## ⚙️ Instrucciones de Instalación y Ejecución
-
-
-
-\### Requisitos Previos
-
-\* PostgreSQL 13 o superior instalado localmente.
-
-\* pgAdmin 4 o cliente de terminal psql.
-
-\* Git configurado en el sistema operativo.
-
-
-
-\### Pasos para Ejecución Local
-
-1\. Abre tu herramienta de bases de datos preferida conectada a PostgreSQL.
-
-2\. Crea la base de datos ejecutando el comando:
-
-&#x20;  ```sql
-
-&#x20;  CREATE DATABASE control\_escolar;
 
